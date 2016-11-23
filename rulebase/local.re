@@ -4,7 +4,16 @@
 #                                                                              #
 ################################################################################
 
-#
+# Provides the log level for the EUDAT specific rules
+# 
+# Arguments:
+# *euLogLevel [OUT] the debug level for the EUDAT specific rules [0 | 1 | 2]
+#                   0:ERROR, 1:INFO, 2:DEBUG
+getEUDATLoggerLevel(*euLogLevel) {
+    *euLogLevel=2
+}
+
+
 # Provides parameters for the connection with the EPIC service
 # 
 # Arguments:
@@ -138,7 +147,7 @@ getConfParameters(*msiFreeEnabled, *msiCurlEnabled, *authzEnabled) {
 getB2SAFEVersion(*version) {
     *major_version = "3";
     *minor_version = "1";
-    *sub_version = "1";
+    *sub_version = "2";
     *version = *major_version ++ "." ++ *minor_version ++ "-" ++ *sub_version;
 }
 
