@@ -56,7 +56,7 @@ class GraphDBClient():
                       + ' not found, so it will be created')
             try:
                 self.graph.schema.create_uniqueness_constraint("DigitalEntity", 
-                                                               "name")
+                                                               "location")
                 self.graph.schema.create_uniqueness_constraint("Aggregation",
                                                                "name")
                 self.graph.schema.create_uniqueness_constraint("Zone", "name")
@@ -281,9 +281,10 @@ class GraphDBClient():
                 path = self.collPath
             else:
                 path = ''
+                d['name'] = self.collPath + ':' + d['name']
             sumValue = ''
             agg = self._createUniqueNode("Aggregation", d['name'],
-                                                        path[7:],
+                                                        path,
                                                         sumValue,
                                                         d['type'])
             # if the aggregation has a file path, it means that it is a package
@@ -342,7 +343,7 @@ class GraphDBClient():
     def _defineDigitalEntity(self, fmt, path, dtype, name, de=None, absolute=False):
  
         absolutePath = path
-        # if the path of the files in the manifest a relative,
+        # if the path of the files in the manifest is relative
         # then the absolute path has to be built to get the file properties.
         if not absolute:
             absolutePath = self.root + '/' + path
@@ -359,7 +360,7 @@ class GraphDBClient():
 #TODO what if checksum is null?
         else:
             # build the digital entity
-            de = self._createUniqueNode("DigitalEntity", name, path, sumValue,
+            de = self._createUniqueNode("DigitalEntity", name, absolutePath, sumValue,
                                                          dtype)
             de.properties['format'] = fmt
             if not self.conf.dryrun:

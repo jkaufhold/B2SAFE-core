@@ -75,7 +75,7 @@ class MetsManifest():
         with open(self.conf.md_jsonld_file, 'r') as f:
             collStruct = json.load(f)
         self.logger.debug('Building the METS structural map section')
-        rootName = ftree.keys()[0] + '_' + str(uuid.uuid4())
+        rootName = ftree.keys()[0]
         smap = self.buildStructMap(rootName, collStruct)
         mf.structMap.append(smap)
         self.manifest = mf
@@ -97,16 +97,16 @@ class MetsManifest():
             if not self.conf.abs_path:
                 # the path are absolute
                 parent = root + '/' + coll
-                groupId = '_' + coll + '_' + str(uuid.uuid4())
+                groupId = parent.replace('/', '_')
             else:
                 # the path are relative
                 parent = coll
-                groupId = '_' + coll.rsplit('/', 1)[1] + '_' + str(uuid.uuid4())
+                groupId = (root + '/' + coll).replace('/', '_')
             fgrp = fileGrpType(ID=groupId)
             fgrp_files = fileGrpType(ID=groupId+'__files__')
             for fp in dirs[coll]['__files__']:
                 # loop over the files of the collection
-                fileId = '_' + fp + '_' + str(uuid.uuid4())
+                fileId = groupId + '_' + fp
                 ft = fileType(ID=fileId)
                 # create a METS element FLocat
                 loc = CTD_ANON_19(LOCTYPE='URL')
@@ -143,19 +143,22 @@ class MetsManifest():
         processedPaths = []
         # loop over the metadata description of the collection provided 
         # as a jsonld doc
+        i=0
         for entity in collStruct['Structure']:
 
             self.logger.debug('Processing the jsonld entity: {}'.format(
                               pprint.pformat(entity)))
             normPath = entity['path'][2:]
             self.logger.debug('with path: ' + normPath)
+            self.logger.debug('with fileMap: ' + str(self.fileMap))
             pathSubSet = self.patternMatch(normPath, self.fileMap.keys())
             self.logger.debug('which matches the following patterns: ' 
                               + pprint.pformat(pathSubSet.keys()))
             processedPaths += pathSubSet.keys()
             for path in pathSubSet.keys():
                 self.entityRelMgmt(path, entity, pathSubSet[path], temp_div, 
-                                   temp_rel, future_rel)
+                                   temp_rel, future_rel, i, rootName)
+                i=i+1
 
         divMainList = []
         # for each entity 
@@ -195,14 +198,14 @@ class MetsManifest():
 
 
     def entityRelMgmt(self, normPath, entity, templateDict, divDict, relDict, 
-                      placeHolderDict):
+                      placeHolderDict, ind, rootName):
 
         # for each path a mets div is created and stored in a temp list
         div = self.divBuilder(entity['format'], entity['type'], normPath)
         divDict[normPath] = div
         if 'isRelatedTo' in entity.keys():
             # analyze the relations of this entity with others
-            label = 'rel_' + str(uuid.uuid4())
+            label = 'rel_' + rootName + '_' + str(ind)
             divRel = divType(LABEL=label, TYPE="entityRelation")
             divRel.append(div)
             for relation in entity['isRelatedTo']:
@@ -211,7 +214,6 @@ class MetsManifest():
                     for tkey in templateDict.keys():
                         normPathRel = normPathRel.replace('${'+ tkey +'}',
                                                           templateDict[tkey])
-                print 'normPathRel: ' + normPathRel
                 pathSubSet = fnmatch.filter(self.fileMap.keys(), normPathRel)
                 for path in pathSubSet:
                     if path in divDict.keys():
@@ -303,10 +305,9 @@ class Configuration():
       
         self.irods_home_dir = self._getConfOption('iRODS', 'irods_home_dir')
         self.irods_debug = self._getConfOption('iRODS', 'irods_debug', True)
-#TODO add it to the configuration and exploit when possible in irods command
-#        self.irods_resource = self._getConfOption('iRODS', 'irods_resource')
-
-        
+        self.irods_resource = self._getConfOption('iRODS', 'irods_resource')
+       
+ 
     def _getConfOption(self, section, option, boolean=False):
         """
         get the options from the configuration file
@@ -365,6 +366,7 @@ def writeMets(args):
             temp = tempfile.NamedTemporaryFile()
             try:
                 temp.write(manifestXML)
+                temp.seek(0)
                 target = args.irods[0] + '/' + 'manifest.xml'
                 logger.info('in the irods namespace: {}'.format(target))
                 irodsu.putFile(temp.name, target, configuration.irods_resource)
