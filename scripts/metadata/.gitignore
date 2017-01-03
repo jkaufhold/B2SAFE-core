@@ -1,2 +1,4 @@
 conf/b2safe_neo4j.conf
+conf/mets_factory.conf
+conf/metadata*.json
 log/

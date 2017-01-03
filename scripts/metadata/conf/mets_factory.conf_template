@@ -11,7 +11,7 @@ format_default=unknown
 type_default=Data
 
 [iRODS]
-irods_home_dir=/cinecaDMPZone2/home
-irods_debug=True
+irods_home_dir=/myZone/home
+irods_debug=False
 # in case the wanted resource is not the default, specify its name here
 #irods_resource=irodsResourceName

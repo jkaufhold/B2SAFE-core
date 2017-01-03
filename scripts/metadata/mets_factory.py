@@ -19,11 +19,12 @@ from manifest.libmets import *
 
 logger = logging.getLogger('GraphDBClient')
 
+"""It represents the collection associated to a manifest."""
+
 class Collection():
 
-
     def __init__(self, config, logger):
-
+        """Initialize the collection"""
         self.conf = config
         self.logger = logger
        
@@ -55,11 +56,12 @@ class Collection():
         return dir
 
 
+"""It represents the METS manifest."""
+
 class MetsManifest():
 
-
     def __init__(self, ftree, config, logger):
-
+        """Initialize the manifest"""
         self.conf = config
         self.logger = logger 
 
@@ -82,7 +84,7 @@ class MetsManifest():
 
    
     def getManifest(self):
-        
+        """Return the manifest object"""
         return self.manifest
  
 
@@ -189,7 +191,7 @@ class MetsManifest():
 
 
     def divBuilder(self, label, etype, path):
- 
+        """It builds the manifest element of type DIV""" 
         self.logger.debug('divBuilder for path: {}'.format(path))
         div = divType(LABEL=label, TYPE=etype)
         fptr = CTD_ANON_13(FILEID=self.fileMap[path])
@@ -199,7 +201,10 @@ class MetsManifest():
 
     def entityRelMgmt(self, normPath, entity, templateDict, divDict, relDict, 
                       placeHolderDict, ind, rootName):
-
+        """It builds the manifest element of type DIV, which contains the 
+           objects that are related to each other, using the information of the 
+           json-ld document as input.
+        """
         # for each path a mets div is created and stored in a temp list
         div = self.divBuilder(entity['format'], entity['type'], normPath)
         divDict[normPath] = div
@@ -235,7 +240,10 @@ class MetsManifest():
 
 
     def patternMatch(self, pattern, targets):
-
+        """It checks if there are real phisycal paths matching the regular
+           expressions included in the json-ld document and returns a dictionary
+           which maps template variables and paths.
+        """
         # translate the unix shell like pattern syntax to regular expression
         transRegex = fnmatch.translate(pattern)
         # check if there are templates variable in the path: ${varName}
@@ -243,18 +251,20 @@ class MetsManifest():
         if templateNames:
             for tNames in templateNames:
                 # for each template var creates a regex group
-                transRegex = transRegex.replace('\$\{'+ tNames +'\}', r'(?P<'+ tNames +'>\w+)')
+                transRegex = transRegex.replace('\$\{'+ tNames +'\}', 
+                                                r'(?P<'+ tNames +'>\w+)')
         pathRegex = transRegex + '$'
         template = re.compile(pathRegex)
         pathSubSet = {}
-        # loop over all the patterns to filter them according to the regex expression
+        # loop over all the patterns to filter them according to the regex 
+        # expression
         for item in targets:
             m = template.match(item)
             if m:
                 pathSubSet[item] = {}
                 for tNames in templateNames:
-                    # store in a dictionary the values of the template vars used in a 
-                    # each pattern
+                    # store in a dictionary the values of the template vars used
+                    # in each pattern
                     pathSubSet[item][tNames] = m.group(tNames)
 
         return pathSubSet 
