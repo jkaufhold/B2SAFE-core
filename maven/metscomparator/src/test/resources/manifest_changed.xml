@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ns1:mets ID="_EUDATMETS_cb4c0edb-1488-4ee9-89ac-2a0f34d36a11" LABEL="EUDAT METS document" xmlns:ns1="http://www.loc.gov/METS/" xmlns:ns2="http://www.w3.org/1999/xlink">
+  <ns1:fileSec>
+    <ns1:fileGrp>
+      <ns1:fileGrp ID="_collection_A">
+        <ns1:fileGrp ID="_collection_A__files__">
+          <ns1:file ID="_collection_A_metatest2.txt">
+            <ns1:FLocat LOCTYPE="URL" ns2:href="file://collection_A/metatest2.txt" ns2:type="simple"/>
+          </ns1:file>
+          <ns1:file ID="_collection_A_test2.txt">
+            <ns1:FLocat LOCTYPE="URL" ns2:href="file://collection_A/test2.txt" ns2:type="simple"/>
+          </ns1:file>
+          <ns1:file ID="_collection_A_test3.txt">
+            <ns1:FLocat LOCTYPE="URL" ns2:href="file://collection_A/test3.txt" ns2:type="simple"/>
+          </ns1:file>
+          <ns1:file ID="_collection_A_manifest.xml">
+            <ns1:FLocat LOCTYPE="URL" ns2:href="file://collection_A/manifest.xml" ns2:type="simple"/>
+          </ns1:file>
+          <ns1:file ID="_collection_A_test.txt">
+            <ns1:FLocat LOCTYPE="URL" ns2:href="file://collection_A/test.txt" ns2:type="simple"/>
+          </ns1:file>
+        </ns1:fileGrp>
+        <ns1:fileGrp ID="_collection_A_collection_A1">
+          <ns1:fileGrp ID="_collection_A_collection_A1__files__">
+            <ns1:file ID="_collection_A_collection_A1_test1.txt">
+              <ns1:FLocat LOCTYPE="URL" ns2:href="file://collection_A/collection_A1/test1.txt" ns2:type="simple"/>
+            </ns1:file>
+          </ns1:fileGrp>
+        </ns1:fileGrp>
+        <ns1:fileGrp ID="_collection_A_A3">
+          <ns1:fileGrp ID="_collection_A_A3__files__">
+            <ns1:file ID="_collection_A_A3_dat1.txt">
+              <ns1:FLocat LOCTYPE="URL" ns2:href="file://collection_A/A3/dat1.txt" ns2:type="simple"/>
+            </ns1:file>
+          </ns1:fileGrp>
+        </ns1:fileGrp>
+      </ns1:fileGrp>
+    </ns1:fileGrp>
+  </ns1:fileSec>
+  <ns1:structMap TYPE="Relational">
+    <ns1:div LABEL="collection_A" TYPE="digitalCollection">
+      <ns1:div LABEL="rel_collection_A_4" TYPE="entityRelation">
+        <ns1:div LABEL="dataless" TYPE="DescriptiveMetaData">
+          <ns1:fptr FILEID="_collection_A_test2.txt"/>
+        </ns1:div>
+        <ns1:div LABEL="miniseed" TYPE="Data">
+          <ns1:fptr FILEID="_collection_A_test.txt"/>
+        </ns1:div>
+        <ns1:div LABEL="miniseed" TYPE="Data">
+          <ns1:fptr FILEID="_collection_A_collection_A1_test1.txt"/>
+        </ns1:div>
+        <ns1:div LABEL="miniseed" TYPE="Data">
+          <ns1:fptr FILEID="_collection_A_A3_dat1.txt"/>
+        </ns1:div>
+      </ns1:div>
+      <ns1:div LABEL="seed" TYPE="Composite">
+        <ns1:fptr FILEID="_collection_A_test3.txt"/>
+      </ns1:div>
+      <ns1:div LABEL="dataless" TYPE="DescriptiveMetaData">
+        <ns1:fptr FILEID="_collection_A_metatest2.txt"/>
+      </ns1:div>
+      <ns1:div LABEL="unknown" TYPE="Data">
+        <ns1:fptr FILEID="_collection_A_manifest.xml"/>
+      </ns1:div>
+    </ns1:div>
+  </ns1:structMap>
+</ns1:mets>

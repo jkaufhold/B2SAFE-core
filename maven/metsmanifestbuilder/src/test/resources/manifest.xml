@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<mets OBJID="ID:_EUDATMETS_d2190295-7dee-4bb0-87d7-0baedc4c11ca"
+	LABEL="EUDAT METS document" xmlns="http://www.loc.gov/METS/"
+	xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mods="http://www.loc.gov/METS/"
+	xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mods/v3/mods-3-0.xsd">
+	<fileSec>
+		<fileGrp>
+			<fileGrp ID="_collection_A1">
+				<fileGrp ID="collection_A1__files__">
+					<file ID="_test1.txt_97331e61-bff5-44a4-ae5f-59833d1f719b">
+						<FLocat LOCTYPE="URL" xlink:type="simple"
+							xlink:href="C:\Projekte\workspace\b2safe\metsmanifestbuilder\collection_A\collection_A1\test1.txt"
+							xlink:role="simple" />
+					</file>
+				</fileGrp>
+			</fileGrp>
+			<fileGrp ID="collection_A__files__">
+				<file ID="_metatest2.txt_00c26e7b-bc31-4104-b88e-af94551a34df">
+					<FLocat LOCTYPE="URL" xlink:type="simple"
+						xlink:href="C:\Projekte\workspace\b2safe\metsmanifestbuilder\collection_A\metatest2.txt"
+						xlink:role="simple" />
+				</file>
+				<file ID="_test.txt_d360bdc8-3b7c-44ef-8d0c-81c065e1f7f3">
+					<FLocat LOCTYPE="URL" xlink:type="simple"
+						xlink:href="C:\Projekte\workspace\b2safe\metsmanifestbuilder\collection_A\test.txt"
+						xlink:role="simple" />
+				</file>
+				<file ID="_test2.txt_2469c803-5f70-4fdd-9fef-73781484ef7b">
+					<FLocat LOCTYPE="URL" xlink:type="simple"
+						xlink:href="C:\Projekte\workspace\b2safe\metsmanifestbuilder\collection_A\test2.txt"
+						xlink:role="simple" />
+				</file>
+			</fileGrp>
+		</fileGrp>
+	</fileSec>
+	<structMap TYPE="Relational">
+		<div LABEL="collection_A_2699d598-8dc9-44d1-9227-a3c4e5cfaa89" TYPE="digitalCollection">
+			<div LABEL="dataless" TYPE="DescriptiveMetaData">
+				<fptr FILEID="_metatest2.txt_a4e0e3a4-e64c-4003-bd4f-db8c8d0eec0a" />
+			</div>
+		</div>
+	</structMap>
+</mets>
